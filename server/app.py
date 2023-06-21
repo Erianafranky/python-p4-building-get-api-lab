@@ -18,6 +18,7 @@ db.init_app(app)
 def index():
     return '<h1>Bakery GET API</h1>'
 
+#returns an array of JSON objects for all bakeries in the database
 @app.route('/bakeries')
 def bakeries():
     bakeries = []
@@ -37,6 +38,7 @@ def bakeries():
 
     return response
 
+#returns a single bakery as JSON with its baked goods nested in an array
 @app.route('/bakeries/<int:id>')
 def bakery_by_id(id):
     bakery = Bakery.query.filter_by(id=id).first()
@@ -51,6 +53,7 @@ def bakery_by_id(id):
 
     return response
 
+#returns an array of baked goods as JSON, sorted by price in descending order
 @app.route('/baked_goods/by_price')
 def baked_goods_by_price():
     baked_goods = BakedGood.query.order_by((BakedGood.price).desc())
@@ -65,6 +68,7 @@ def baked_goods_by_price():
         goodies.append(dict)
     return goodies
 
+#returns the single most expensive baked good as JSON
 @app.route('/baked_goods/most_expensive')
 def most_expensive_baked_good():
     baked_goods = BakedGood.query.order_by((BakedGood.price).desc()).first()
